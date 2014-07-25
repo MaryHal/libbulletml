@@ -1,10 +1,11 @@
 #CXXFLAGS = -g -W -Wall -ansi -pedantic
 #CXXFLAGS = -pg -g -W -Wall -ansi -pedantic
 #CXXFLAGS = -O2 -W -Wall -ansi -pedantic -I. -I../d_cpp
-CXXFLAGS = -O2 -W -Wall -ansi -pedantic
+CXXFLAGS = -O2 -W -Wall -ansi -pedantic -fPIC --std=c++11
 CFLAGS = -O2
 LDFLAGS=
 INCLUDES= -I. -I../d_cpp
+
 OBJS = bulletmlparser-tinyxml.o bulletmlparser.o bulletmltree.o calc.o \
 	formula-variables.o bulletmlrunner.o bulletmlrunnerimpl.o bulletml_d.o
 
@@ -30,7 +31,7 @@ libbulletml.a: tinyxml/tinyxml.o ../bulletml.d $(OBJS)
 	perl ../d_cpp/create_d_import.pl bulletml_d.cpp bulletml.d
 
 tinyxml/tinyxml.o:
-	$(MAKE) -C tinyxml
+	$(MAKE) -C tinyxml CXXFLAGS="$(CXXFLAGS)"
 
 clean:
 	rm -f *.o *.a test_bulletml *.so *.so.*
