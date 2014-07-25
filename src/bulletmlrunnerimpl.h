@@ -149,7 +149,7 @@ protected:
     Validatable<double> spd_, dir_, prevSpd_, prevDir_;
 
     typedef BulletMLParameter Parameters;
-    std::tr1::shared_ptr<Parameters> parameters_;
+    std::shared_ptr<Parameters> parameters_;
 
 protected:
     BulletMLParser* bulletml_;
@@ -171,7 +171,7 @@ protected:
     typedef std::stack<RepeatElem*> RepeatStack;
     RepeatStack repeatStack_;
     typedef std::stack<std::pair<BulletMLNode*,
-								 std::tr1::shared_ptr<Parameters> > > RefStack;
+								 std::shared_ptr<Parameters> > > RefStack;
     RefStack refStack_;
 
     typedef void (BulletMLRunnerImpl::*Method)();

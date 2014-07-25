@@ -18,7 +18,7 @@ typedef double NumType;
 #include "formula.h"
 #include "formula-variables.h"
 
-int yyerror(char* s);
+int yyerror(const char* s);
 int yylex();
 
 const char* yyinStr;
@@ -150,7 +150,7 @@ int yylex ()
 	return c;
 }
 
-int yyerror(char* s) {
+int yyerror(const char* s) {
 	printf("yyerror: %s\n", s);
 	return 0;
 }
