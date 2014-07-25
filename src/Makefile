@@ -2,19 +2,19 @@
 #CXXFLAGS = -pg -g -W -Wall -ansi -pedantic
 #CXXFLAGS = -O2 -W -Wall -ansi -pedantic -I. -I../d_cpp
 CXXFLAGS = -O2 -W -Wall -ansi -pedantic -fPIC --std=c++11
-CFLAGS = -O2
 LDFLAGS=
-INCLUDES= -I. -I../d_cpp
+INCLUDES=
 
 OBJS = bulletmlparser-tinyxml.o bulletmlparser.o bulletmltree.o calc.o \
-	formula-variables.o bulletmlrunner.o bulletmlrunnerimpl.o bulletml_d.o
+	formula-variables.o bulletmlrunner.o bulletmlrunnerimpl.o
 
 MAJOR=0d2
 MINOR=0
 
 all: libbulletml.a libbulletml.so
 
-libbulletml.so: tinyxml/tinyxml.o ../bulletml.d $(OBJS)
+# libbulletml.so: tinyxml/tinyxml.o ../bulletml.d $(OBJS)
+libbulletml.so: tinyxml/tinyxml.o $(OBJS)
 	$(CXX) $(LDFLAGS) -shared \
 		-Wl,-soname,$@.$(MAJOR) \
 		-o $@.$(MAJOR).$(MINOR) \
@@ -24,11 +24,11 @@ libbulletml.so: tinyxml/tinyxml.o ../bulletml.d $(OBJS)
 	rm -f $@
 	ln -s $@.$(MAJOR) $@
 
-libbulletml.a: tinyxml/tinyxml.o ../bulletml.d $(OBJS)
+libbulletml.a: tinyxml/tinyxml.o $(OBJS)
 	ar cru $@ *.o tinyxml/tiny*.o
 
-../bulletml.d: bulletml_d.cpp
-	perl ../d_cpp/create_d_import.pl bulletml_d.cpp bulletml.d
+# ../bulletml.d: bulletml_d.cpp
+# 	perl ../d_cpp/create_d_import.pl bulletml_d.cpp bulletml.d
 
 tinyxml/tinyxml.o:
 	$(MAKE) -C tinyxml CXXFLAGS="$(CXXFLAGS)"
