@@ -1,27 +1,28 @@
 #include "bulletmlparser.h"
-#include "bulletmlparser-tinyxml.h"
+#include "bulletmlparser-tinyxml2.h"
 #include "bulletmlerror.h"
 #include "bulletmltree.h"
 
-#include <string>
+#include <cassert>
+#include <cstring>
 
 #include <cstdio>
 
-BulletMLParserTinyXML::BulletMLParserTinyXML(const char* filename)
+BulletMLParserTinyXML2::BulletMLParserTinyXML2(const char* filename)
     : curNode_(0)
 {
     setName(filename);
 }
 
-BulletMLParserTinyXML::~BulletMLParserTinyXML() {}
+BulletMLParserTinyXML2::~BulletMLParserTinyXML2() {}
 
-void BulletMLParserTinyXML::getTree(TiXmlNode* node) {
+void BulletMLParserTinyXML2::getTree(tinyxml2::XMLNode* node) {
     if (node->ToComment() != 0) return;
     translateNode(node);
 
-    TiXmlNode* child;
+    tinyxml2::XMLNode* child;
     for (child = node->FirstChild(); child; child = child->NextSibling()) {
-        TiXmlText* text;
+        tinyxml2::XMLText* text;
         if ((text = child->ToText()) != 0) {
             curNode_->setValue(text->Value());
             break;
@@ -33,25 +34,25 @@ void BulletMLParserTinyXML::getTree(TiXmlNode* node) {
     curNode_ = curNode_->getParent();
 }
 
-void BulletMLParserTinyXML::translateNode(TiXmlNode* node) {
-    TiXmlElement* elem = node->ToElement();
+void BulletMLParserTinyXML2::translateNode(tinyxml2::XMLNode* node) {
+    tinyxml2::XMLElement* elem = node->ToElement();
     assert(elem != 0);
 
     BulletMLNode* xmlNode = addContent(elem->Value());
 
     if (xmlNode->getName() == BulletMLNode::bulletml) {
-        TiXmlAttribute* attr;
+        const tinyxml2::XMLAttribute* attr;
         for (attr = elem->FirstAttribute(); attr; attr = attr->Next()) {
-            if (attr->Value() == "horizontal") setHorizontal();
+            // If attribute == horizontal
+            if (strcmp(attr->Value(), "horizontal") == 0) setHorizontal();
         }
     }
     else {
         MyAttributes mattr;
-        TiXmlAttribute* attr;
+        const tinyxml2::XMLAttribute* attr;
         for (attr = elem->FirstAttribute(); attr; attr = attr->Next()) {
             mattr.push_back(attr->Name());
             mattr.push_back(attr->Value());
-            printf("%s %s\n", attr->Name().c_str(), attr->Value().c_str());
         }
         addAttribute(mattr, xmlNode);
         if (curNode_ != 0) curNode_->addChild(xmlNode);
@@ -59,12 +60,12 @@ void BulletMLParserTinyXML::translateNode(TiXmlNode* node) {
     curNode_ = xmlNode;
 }
 
-void BulletMLParserTinyXML::parseImpl(TiXmlDocument& doc) {
+void BulletMLParserTinyXML2::parseImpl(tinyxml2::XMLDocument& doc) {
     if (doc.Error()) {
-        throw BulletMLError(std::string(doc.Value()) + ": " + doc.ErrorDesc());
+        throw BulletMLError(std::string(doc.Value()) + ": " + doc.GetErrorStr1());
     }
 
-    TiXmlNode* node;
+    tinyxml2::XMLNode* node;
     for (node = doc.FirstChild(); node; node = node->NextSibling()) {
         if (node->ToElement() != 0) {
             getTree(node);
@@ -73,9 +74,9 @@ void BulletMLParserTinyXML::parseImpl(TiXmlDocument& doc) {
     }
 }
 
-void BulletMLParserTinyXML::parse() {
-    TiXmlDocument doc(name_);
-    doc.LoadFile();
+void BulletMLParserTinyXML2::parse() {
+    tinyxml2::XMLDocument doc;
+    doc.LoadFile(name_);
     parseImpl(doc);
 }
 
