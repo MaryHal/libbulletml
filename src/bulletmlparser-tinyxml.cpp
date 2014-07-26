@@ -5,8 +5,6 @@
 
 #include <string>
 
-#include <cstdio>
-
 BulletMLParserTinyXML::BulletMLParserTinyXML(const char* filename)
     : curNode_(0)
 {
@@ -51,7 +49,6 @@ void BulletMLParserTinyXML::translateNode(TiXmlNode* node) {
         for (attr = elem->FirstAttribute(); attr; attr = attr->Next()) {
             mattr.push_back(attr->Name());
             mattr.push_back(attr->Value());
-            printf("%s %s\n", attr->Name().c_str(), attr->Value().c_str());
         }
         addAttribute(mattr, xmlNode);
         if (curNode_ != 0) curNode_->addChild(xmlNode);
