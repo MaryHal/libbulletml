@@ -6,8 +6,6 @@
 #include <cassert>
 #include <cstring>
 
-#include <cstdio>
-
 BulletMLParserTinyXML2::BulletMLParserTinyXML2(const char* filename)
     : curNode_(0)
 {

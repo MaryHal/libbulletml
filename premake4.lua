@@ -9,7 +9,7 @@ solution "libbulletml"
         buildoptions { "-std=c++11", "-fPIC" }
 
         includedirs { }
-        files { "src/**" }
+        files { "src/**.cpp" }
 
         targetdir "lib"
         targetname "bulletml"
