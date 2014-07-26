@@ -22,6 +22,7 @@ solution "libbulletml"
         ---------------------------------------
         -- Build rules
         configuration "Debug"
+            targetsuffix "_d"
             defines "DEBUG"
             flags { "Symbols", "ExtraWarnings" }
 
