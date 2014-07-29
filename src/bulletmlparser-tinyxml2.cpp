@@ -74,7 +74,7 @@ void BulletMLParserTinyXML2::parseImpl(tinyxml2::XMLDocument& doc) {
 
 void BulletMLParserTinyXML2::parse() {
     tinyxml2::XMLDocument doc;
-    doc.LoadFile(name_);
+    doc.LoadFile(name_.c_str());
     parseImpl(doc);
 }
 

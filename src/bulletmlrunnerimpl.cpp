@@ -25,7 +25,8 @@ BulletMLRunnerImpl::commandMap_[BulletMLNode::nameSize] = {
 	&BulletMLRunnerImpl::runVanish
 };
 
-double BulletMLRunnerImpl::getDirection(BulletMLNode* dirNode) {
+double BulletMLRunnerImpl::getDirection(BulletMLNode* dirNode,
+                                        bool prevChange) {
     double dir;
 
     bool isDefault = true;
@@ -63,7 +64,7 @@ double BulletMLRunnerImpl::getDirection(BulletMLNode* dirNode) {
     while (dir > 360) dir -= 360;
     while (dir < 0) dir += 360;
 
-    prevDir_ = dir;
+    if (prevChange) prevDir_ = dir;
 
     return dir;
 }
@@ -118,7 +119,12 @@ BulletMLRunnerImpl::BulletMLRunnerImpl(BulletMLState* state,
 	act_ = node_[0];
 }
 
-BulletMLRunnerImpl::~BulletMLRunnerImpl() {}
+BulletMLRunnerImpl::~BulletMLRunnerImpl() {
+	while (!repeatStack_.empty()) {
+		delete repeatStack_.top();
+		repeatStack_.pop();
+	}
+}
 
 double BulletMLRunnerImpl::getNumberContents(const BulletMLNode* node) {
     assert(node);
@@ -398,7 +404,7 @@ void BulletMLRunnerImpl::runChangeDirection() {
 	BulletMLNode::Type type = dirNode->getType();
 
 	double dir;
-	if (type != BulletMLNode::sequence) dir = getDirection(dirNode);
+	if (type != BulletMLNode::sequence) dir = getDirection(dirNode, false);
 	else dir = getNumberContents(dirNode);
 
 	calcChangeDirection(dir, term, type == BulletMLNode::sequence);
@@ -467,7 +473,7 @@ void BulletMLRunnerImpl::calcChangeDirection(double direction, int term,
 		double dirSpace2;
 		if (dirSpace1 > 0) dirSpace2 = dirSpace1 - 360;
 		else dirSpace2 = dirSpace1 + 360;
-		if (fabs(dirSpace1) < fabs(dirSpace2)) dirSpace = dirSpace1;
+		if (abs(dirSpace1) < abs(dirSpace2)) dirSpace = dirSpace1;
 		else dirSpace = dirSpace2;
 
 		auto_ptr_copy(changeDir_, new LinearFunc<int, double>

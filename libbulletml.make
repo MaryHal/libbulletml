@@ -159,13 +159,7 @@ OBJECTS := \
 	$(OBJDIR)/bulletmlrunner.o \
 	$(OBJDIR)/bulletmlparser.o \
 	$(OBJDIR)/bulletmlparser-tinyxml2.o \
-	$(OBJDIR)/bulletmlparser-tinyxml.o \
 	$(OBJDIR)/tinyxml2.o \
-	$(OBJDIR)/tinyxmlerror.o \
-	$(OBJDIR)/tinyxmlparser.o \
-	$(OBJDIR)/tinyxml.o \
-	$(OBJDIR)/xmltest.o \
-	$(OBJDIR)/tinystr.o \
 
 RESOURCES := \
 
@@ -247,25 +241,7 @@ $(OBJDIR)/bulletmlparser.o: src/bulletmlparser.cpp
 $(OBJDIR)/bulletmlparser-tinyxml2.o: src/bulletmlparser-tinyxml2.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/bulletmlparser-tinyxml.o: src/bulletmlparser-tinyxml.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/tinyxml2.o: src/tinyxml2/tinyxml2.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/tinyxmlerror.o: src/tinyxml/tinyxmlerror.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/tinyxmlparser.o: src/tinyxml/tinyxmlparser.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/tinyxml.o: src/tinyxml/tinyxml.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/xmltest.o: src/tinyxml/xmltest.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/tinystr.o: src/tinyxml/tinystr.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 

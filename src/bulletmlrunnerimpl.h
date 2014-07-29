@@ -6,7 +6,6 @@
 #include <vector>
 #include <memory>
 #include <stack>
-#include <memory>
 
 class BulletMLRunner;
 class BulletMLState;
@@ -136,7 +135,7 @@ private:
     double getNumberContents(const BulletMLNode* node);
     std::vector<double>* getParameters();
     double getSpeed(BulletMLNode* spdNode);
-    double getDirection(BulletMLNode* dirNode);
+	double getDirection(BulletMLNode* dirNode, bool prevChange = true);
 
 private:
 private:
