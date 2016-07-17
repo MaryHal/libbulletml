@@ -151,3 +151,12 @@ $RECYCLE.BIN/
 
 # Mac crap
 .DS_Store
+
+# =========================
+# gcc build output
+# =========================
+obj/
+*.o
+
+lib/
+*.a
