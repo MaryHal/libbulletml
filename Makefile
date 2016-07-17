@@ -11,26 +11,26 @@ ifndef verbose
 endif
 
 ifeq ($(config),debug)
-  libbulletml_config = debug
+  bulletml_config = debug
 endif
 ifeq ($(config),release)
-  libbulletml_config = release
+  bulletml_config = release
 endif
 
-PROJECTS := libbulletml
+PROJECTS := bulletml
 
 .PHONY: all clean help $(PROJECTS) 
 
 all: $(PROJECTS)
 
-libbulletml:
-ifneq (,$(libbulletml_config))
-	@echo "==== Building libbulletml ($(libbulletml_config)) ===="
-	@${MAKE} --no-print-directory -C . -f libbulletml.make config=$(libbulletml_config)
+bulletml:
+ifneq (,$(bulletml_config))
+	@echo "==== Building bulletml ($(bulletml_config)) ===="
+	@${MAKE} --no-print-directory -C . -f bulletml.make config=$(bulletml_config)
 endif
 
 clean:
-	@${MAKE} --no-print-directory -C . -f libbulletml.make clean
+	@${MAKE} --no-print-directory -C . -f bulletml.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -42,6 +42,6 @@ help:
 	@echo "TARGETS:"
 	@echo "   all (default)"
 	@echo "   clean"
-	@echo "   libbulletml"
+	@echo "   bulletml"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"

@@ -13,7 +13,7 @@ endif
 ifeq ($(config),debug)
   RESCOMP = windres
   TARGETDIR = lib/debug
-  TARGET = $(TARGETDIR)/liblibbulletml.a
+  TARGET = $(TARGETDIR)/libbulletml.a
   OBJDIR = obj/debug
   DEFINES += -DDEBUG
   INCLUDES +=
@@ -40,7 +40,7 @@ endif
 ifeq ($(config),release)
   RESCOMP = windres
   TARGETDIR = lib/release
-  TARGET = $(TARGETDIR)/liblibbulletml.a
+  TARGET = $(TARGETDIR)/libbulletml.a
   OBJDIR = obj/release
   DEFINES += -DNDEBUG
   INCLUDES +=
@@ -93,7 +93,7 @@ ifeq (/bin,$(findstring /bin,$(SHELL)))
 endif
 
 $(TARGET): $(GCH) ${CUSTOMFILES} $(OBJECTS) $(LDDEPS) $(RESOURCES)
-	@echo Linking libbulletml
+	@echo Linking bulletml
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -114,7 +114,7 @@ else
 endif
 
 clean:
-	@echo Cleaning libbulletml
+	@echo Cleaning bulletml
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(OBJDIR)

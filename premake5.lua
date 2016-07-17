@@ -1,7 +1,7 @@
 workspace "libbulletml"
 configurations { "debug", "release" }
 
-project "libbulletml"
+project "bulletml"
 language "C++"
 kind "StaticLib"
 
